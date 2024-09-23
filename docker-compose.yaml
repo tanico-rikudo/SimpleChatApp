@@ -1,0 +1,38 @@
+version: "3.9"
+services:
+  streamlit:
+    build:
+      context: ./streamlit
+      dockerfile: Dockerfile
+    entrypoint: >
+      streamlit run app.py
+    restart: always
+    expose:
+      - "8086"
+      - "8888"
+    ports:
+      - "127.0.0.1:8086:8086"
+      - "127.0.0.1:8888:8888"
+    volumes:
+      - ./jupyter/root_jupyter:/root/.jupyter
+      - ./streamlit:/app
+  # py3:
+  #   build:
+  #     context: ./streamlit
+  #     dockerfile: Dockerfile
+  #   restart: always
+  #   entrypoint: >
+  #     jupyter-lab
+  #     --allow-root
+  #     --ip=0.0.0.0
+  #     --port=8888
+  #     --no-browser
+  #     --NotebookApp.token=''
+  #     --notebook-dir=/app
+  #   expose:
+  #     - "8888"
+  #   ports:
+  #     - "127.0.0.1:8888:8888"
+  #   volumes:
+  #     - ./streamlit/.jupyter:/root/.jupyter
+  #     - ./streamlit:/app
